@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vintech.VinTechCompany.dto.ApiResponse;
 import com.vintech.VinTechCompany.model.Salary;
 import com.vintech.VinTechCompany.services.SalaryService;
 
@@ -24,29 +25,29 @@ public class SalaryController {
     private SalaryService salaryService;
 
     @PostMapping("/calculate-all")
-    public ResponseEntity<List<Salary>> calculateAllSalaries() {
+    public ResponseEntity<ApiResponse<List<Salary>>> calculateAllSalaries() {
         List<Salary> salaries = salaryService.calculateAllSalaries();
-        return ResponseEntity.ok(salaries);
+        return ResponseEntity.ok(new ApiResponse<>(true, "SALARIES CALCULATED SUCCESSFULLY", salaries));
     }
 
     @PostMapping("/calculate/{employeeId}")
-    public ResponseEntity<Salary> calculateSalary(
+    public ResponseEntity<ApiResponse<Salary>> calculateSalary(
             @PathVariable Long employeeId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM") YearMonth month) {
         Salary salary = salaryService.calculateSalary(employeeId, month);
-        return ResponseEntity.ok(salary);
+        return ResponseEntity.ok(new ApiResponse<>(true, "SALARY CALCULATED SUCCESSFULLY", salary));
     }
 
     @GetMapping("/current-month")
-    public ResponseEntity<List<Salary>> getAllSalariesForCurrentMonth() {
+    public ResponseEntity<ApiResponse<List<Salary>>> getAllSalariesForCurrentMonth() {
         List<Salary> salaries = salaryService.getAllSalariesForCurrentMonth();
-        return ResponseEntity.ok(salaries);
+        return ResponseEntity.ok(new ApiResponse<>(true, "SALARIES FOR CURRENT MONTH", salaries));
     }
 
     @GetMapping("/{month}")
-    public ResponseEntity<List<Salary>> getAllSalariesForMonth(
+    public ResponseEntity<ApiResponse<List<Salary>>> getAllSalariesForMonth(
             @PathVariable @DateTimeFormat(pattern = "yyyy-MM") YearMonth month) {
         List<Salary> salaries = salaryService.getAllSalariesForMonth(month);
-        return ResponseEntity.ok(salaries);
+        return ResponseEntity.ok(new ApiResponse<>(true, "SALARIES FOR MONTH " + month, salaries));
     }
 }
