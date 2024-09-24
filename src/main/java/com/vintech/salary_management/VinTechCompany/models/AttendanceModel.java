@@ -21,11 +21,8 @@ public class AttendanceModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    private EmployeeModel employee;
-
-    @Column(name = "date")
-    private Date date;
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private AccountModel account;
 
     @Column(name = "check_in")
     private Time check_in;
@@ -33,8 +30,27 @@ public class AttendanceModel {
     @Column(name = "check_out")
     private Time check_out;
 
+    @Column(name = "date")
+    private Date date;
+
     @Column(name = "total_hours")
     private BigDecimal total_hours;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public AccountModel getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountModel account) {
+        this.account = account;
+    }
 
     public Time getCheck_in() {
         return check_in;
@@ -42,14 +58,6 @@ public class AttendanceModel {
 
     public void setCheck_in(Time check_in) {
         this.check_in = check_in;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Time getCheck_out() {
@@ -60,6 +68,14 @@ public class AttendanceModel {
         this.check_out = check_out;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public BigDecimal getTotal_hours() {
         return total_hours;
     }
@@ -67,21 +83,4 @@ public class AttendanceModel {
     public void setTotal_hours(BigDecimal total_hours) {
         this.total_hours = total_hours;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public EmployeeModel getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(EmployeeModel employee) {
-        this.employee = employee;
-    }
-
 }

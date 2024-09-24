@@ -19,14 +19,38 @@ public class SalaryModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    private EmployeeModel employee;
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private AccountModel account;
 
-    @Column(name = "hourly_salary")
-    private BigDecimal hourly_salary;
+    @Column(name = "total_hours")
+    private BigDecimal total_hours;
 
     @Column(name = "total_salary")
     private BigDecimal total_salary;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public AccountModel getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountModel account) {
+        this.account = account;
+    }
+
+    public BigDecimal getTotal_hours() {
+        return total_hours;
+    }
+
+    public void setTotal_hours(BigDecimal total_hours) {
+        this.total_hours = total_hours;
+    }
 
     public BigDecimal getTotal_salary() {
         return total_salary;
@@ -36,28 +60,14 @@ public class SalaryModel {
         this.total_salary = total_salary;
     }
 
-    public BigDecimal getHourly_salary() {
-        return hourly_salary;
+    public SalaryModel() {
     }
 
-    public void setHourly_salary(BigDecimal hourly_salary) {
-        this.hourly_salary = hourly_salary;
-    }
-
-    public EmployeeModel getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(EmployeeModel employee) {
-        this.employee = employee;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public SalaryModel(Long id, AccountModel account, BigDecimal total_hours, BigDecimal total_salary) {
         this.id = id;
+        this.account = account;
+        this.total_hours = total_hours;
+        this.total_salary = total_salary;
     }
 
 }
