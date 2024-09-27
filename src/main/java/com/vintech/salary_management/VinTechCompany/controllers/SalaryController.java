@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.vintech.salary_management.VinTechCompany.annotations.IsAdmin;
-import com.vintech.salary_management.VinTechCompany.repositories.SalaryRepository;
+import com.vintech.salary_management.VinTechCompany.models.AccountModel;
+import com.vintech.salary_management.VinTechCompany.repositories.AccountRepository;
 import com.vintech.salary_management.VinTechCompany.services.SalaryService;
 import com.vintech.salary_management.VinTechCompany.types.APIResponse;
 
@@ -26,35 +25,25 @@ public class SalaryController {
     private SalaryService salaryService;
 
     @Autowired
-    private SalaryRepository salaryRepository;
+    private AccountRepository accountRepository;
 
-    @IsAdmin
     @GetMapping
     public ResponseEntity<APIResponse> getAllSalary(HttpServletRequest request) {
-        if (extractUsernameFromCookies(request).equals("admin")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+        String username = extractUsernameFromCookies(request);
+        AccountModel accountModel = accountRepository.findByUsername(username);
+        String role = accountModel.getRole().getRole();
+        if (role.equalsIgnoreCase("admin")) {
+            return ResponseEntity.status(HttpStatus.OK)
                     .body(new APIResponse(true, "Lấy thông tin thành công!",
                             salaryService.getAllSalary()));
         } else {
-            String username = extractUsernameFromCookies(request);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+            return ResponseEntity.status(HttpStatus.OK)
                     .body(new APIResponse(true, "Lấy thông tin thành công!",
-                            salaryRepository.findByAccountUsername(username)));
+                            salaryService.getSalaryByUsername(accountModel)));
         }
     }
 
-    @IsAdmin
-    @GetMapping("/{id}")
-    public ResponseEntity<APIResponse> getSalaryById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(new APIResponse(true, "Lấy thông tin thành công!",
-                        salaryRepository.findById(id)
-                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                        "Salary not found"))));
-    }
-
-    @IsAdmin
-    @PostMapping("/update-report")
+    @PostMapping()
     public ResponseEntity<APIResponse> updateReport() {
         try {
             salaryService.updateReport();
@@ -66,11 +55,25 @@ public class SalaryController {
         }
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<APIResponse> getSalaryByUsername(@PathVariable String username) {
+        AccountModel accountModel = accountRepository.findByUsername(username);
+        if (accountModel == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new APIResponse(false, "Không tìm thấy tài khoản!"));
+        }
+        {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new APIResponse(true, "Lấy thông tin thành công!",
+                            salaryService.getSalaryByUsername(accountModel)));
+        }
+    }
+
     private String extractUsernameFromCookies(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("username")) {
+                if (cookie.getName().equals("u_id")) {
                     return cookie.getValue();
                 }
             }

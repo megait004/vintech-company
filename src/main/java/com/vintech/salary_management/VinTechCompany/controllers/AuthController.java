@@ -46,14 +46,14 @@ public class AuthController {
         }
         if (authService.checkLogin(username, password)) {
             String token = authService.generateToken(username);
-            Cookie cookie = new Cookie("token", token);
-            Cookie usernameCookie = new Cookie("username", username);
-            cookie.setMaxAge(3600);
-            usernameCookie.setMaxAge(3600);
-            cookie.setPath("/");
-            usernameCookie.setPath("/");
-            response.addCookie(cookie);
-            response.addCookie(usernameCookie);
+            Cookie tokenCookie = new Cookie("u_t_id", token);
+            Cookie u_idCookie = new Cookie("u_id", username);
+            tokenCookie.setMaxAge(3600);
+            u_idCookie.setMaxAge(3600);
+            tokenCookie.setPath("/");
+            u_idCookie.setPath("/");
+            response.addCookie(tokenCookie);
+            response.addCookie(u_idCookie);
             AccountModel account = accountRepository.findByUsername(username);
             RoleModel role = account.getRole();
             AccountInfomation accountInfomation = new AccountInfomation(account.getAvatarId(), account.getEmail(),
@@ -96,8 +96,8 @@ public class AuthController {
 
     @PostMapping("/logout")
     public ResponseEntity<APIResponse> logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("token", null);
-        Cookie usernameCookie = new Cookie("username", null);
+        Cookie cookie = new Cookie("u_t_id", null);
+        Cookie usernameCookie = new Cookie("u_id", null);
         cookie.setMaxAge(0);
         usernameCookie.setMaxAge(0);
         cookie.setPath("/");

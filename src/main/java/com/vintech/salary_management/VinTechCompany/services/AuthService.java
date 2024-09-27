@@ -1,5 +1,7 @@
 package com.vintech.salary_management.VinTechCompany.services;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class AuthService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private SlugService slugService;
 
     public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
@@ -56,6 +61,9 @@ public class AuthService {
         if (role == null) {
             role = new RoleModel();
             role.setRole("Xét duyệt");
+            String roleSlug = slugService.createSlug("Xét duyệt");
+            role.setroleSlug(roleSlug);
+            role.setHourlySalary(new BigDecimal("0"));
             role = roleRepository.save(role);
         }
         account.setUsername(username);

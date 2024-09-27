@@ -1,7 +1,5 @@
 package com.vintech.salary_management.VinTechCompany.models;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,14 +17,14 @@ public class SalaryModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JoinColumn(name = "accountUsername", referencedColumnName = "username")
     private AccountModel account;
 
-    @Column(name = "total_hours")
-    private BigDecimal total_hours;
+    @Column(name = "totalHours")
+    private Long totalHours;
 
-    @Column(name = "total_salary")
-    private BigDecimal total_salary;
+    @Column(name = "totalSalary")
+    private Long totalSalary;
 
     public Long getId() {
         return id;
@@ -44,30 +42,30 @@ public class SalaryModel {
         this.account = account;
     }
 
-    public BigDecimal getTotal_hours() {
-        return total_hours;
+    public Long getTotalHours() {
+        return totalHours;
     }
 
-    public void setTotal_hours(BigDecimal total_hours) {
-        this.total_hours = total_hours;
+    public void setTotalHours(Long totalHours) {
+        this.totalHours = totalHours;
     }
 
-    public BigDecimal getTotal_salary() {
-        return total_salary;
+    public Long getTotalSalary() {
+        return totalSalary;
     }
 
-    public void setTotal_salary(BigDecimal total_salary) {
-        this.total_salary = total_salary;
+    public void setTotalSalary(Long totalSalary) {
+        this.totalSalary = totalSalary;
     }
 
     public SalaryModel() {
     }
 
-    public SalaryModel(Long id, AccountModel account, BigDecimal total_hours, BigDecimal total_salary) {
+    public SalaryModel(Long id, AccountModel account, Long totalHours, Long totalSalary) {
         this.id = id;
         this.account = account;
-        this.total_hours = total_hours;
-        this.total_salary = total_salary;
+        this.totalHours = totalHours;
+        this.totalSalary = totalSalary;
     }
 
 }

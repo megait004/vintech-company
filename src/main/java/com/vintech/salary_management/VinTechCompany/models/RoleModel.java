@@ -19,6 +19,9 @@ public class RoleModel {
     @Column(name = "hourly_salary")
     private BigDecimal hourlySalary;
 
+    @Column(name = "roleSlug")
+    private String roleSlug;
+
     @Column(name = "role", unique = true)
     private String role;
 
@@ -44,6 +47,14 @@ public class RoleModel {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getroleSlug() {
+        return roleSlug;
+    }
+
+    public void setroleSlug(String roleSlug) {
+        this.roleSlug = roleSlug;
     }
 
     public RoleModel() {

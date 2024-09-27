@@ -1,8 +1,5 @@
 package com.vintech.salary_management.VinTechCompany.models;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,20 +18,20 @@ public class AttendanceModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    private AccountModel account;
+    @JoinColumn(name = "accountUsername", referencedColumnName = "username")
+    private AccountModel accountUsername;
 
-    @Column(name = "check_in")
-    private Time check_in;
+    @Column(name = "checkIn")
+    private String checkIn;
 
-    @Column(name = "check_out")
-    private Time check_out;
+    @Column(name = "checkOut")
+    private String checkOut;
 
     @Column(name = "date")
-    private Date date;
+    private String date;
 
-    @Column(name = "total_hours")
-    private BigDecimal total_hours;
+    @Column(name = "totalHours")
+    private Long totalHours;
 
     public Long getId() {
         return id;
@@ -44,43 +41,43 @@ public class AttendanceModel {
         this.id = id;
     }
 
-    public AccountModel getAccount() {
-        return account;
+    public String getAccountUsername() {
+        return accountUsername.getUsername();
     }
 
-    public void setAccount(AccountModel account) {
-        this.account = account;
+    public void setAccountUsername(AccountModel accountUsername) {
+        this.accountUsername = accountUsername;
     }
 
-    public Time getCheck_in() {
-        return check_in;
+    public String getCheckIn() {
+        return checkIn;
     }
 
-    public void setCheck_in(Time check_in) {
-        this.check_in = check_in;
+    public void setCheckIn(String checkIn) {
+        this.checkIn = checkIn;
     }
 
-    public Time getCheck_out() {
-        return check_out;
+    public String getCheckOut() {
+        return checkOut;
     }
 
-    public void setCheck_out(Time check_out) {
-        this.check_out = check_out;
+    public void setCheckOut(String checkOut) {
+        this.checkOut = checkOut;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public BigDecimal getTotal_hours() {
-        return total_hours;
+    public Long getTotalHours() {
+        return totalHours;
     }
 
-    public void setTotal_hours(BigDecimal total_hours) {
-        this.total_hours = total_hours;
+    public void setTotalHours(Long totalHours) {
+        this.totalHours = totalHours;
     }
 }

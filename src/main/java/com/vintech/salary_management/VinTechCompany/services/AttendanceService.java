@@ -17,6 +17,7 @@ public class AttendanceService {
     }
 
     public void checkOut(AttendanceModel attendance) {
+        attendance.setTotalHours(Long.parseLong(attendance.getCheckOut()) - Long.parseLong(attendance.getCheckIn()));
         attendanceRepository.save(attendance);
     }
 

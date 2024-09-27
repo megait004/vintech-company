@@ -15,7 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.vintech.salary_management.VinTechCompany.middleware.AdminMiddleware;
 import com.vintech.salary_management.VinTechCompany.middleware.AuthMiddleware;
 
 @Configuration
@@ -25,17 +24,11 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Autowired
     private AuthMiddleware authMiddleware;
 
-    @Autowired
-    private AdminMiddleware adminMiddleware;
-
     @Override
     public void addInterceptors(@NonNull InterceptorRegistry registry) {
         registry.addInterceptor(authMiddleware)
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/avatar/*", "/api/login", "/api/register", "/api/roles/{id}");
-
-        registry.addInterceptor(adminMiddleware)
-                .addPathPatterns("/api/**");
     }
 
     @Bean
